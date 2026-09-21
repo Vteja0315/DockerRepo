@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -289,5 +290,594 @@
             justify-content: space-between;
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.15)
+            border-top: 1px solid rgba(255,255,255,0.15);
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
 
+        /* ================= BUTTON ================= */
+
+        .book-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e11d48, #be123c);
+            color: white;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(225,29,72,0.35);
+        }
+
+        /* ================= MODAL ================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: 20px;
+        }
+
+        .modal-content {
+            width: 420px;
+            max-width: 100%;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            animation: popup 0.3s ease;
+        }
+
+        @keyframes popup {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .booking-id {
+            margin: 15px 0;
+            padding: 12px;
+            background: #0f172a;
+            border-radius: 10px;
+            color: #fda4af;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #334155;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            .movies {
+                grid-template-columns: 1fr;
+            }
+
+            .selection-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .seat {
+                width: 29px;
+                height: 29px;
+                font-size: 0.65rem;
+            }
+
+            .screen {
+                width: 90%;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎬 Cine<span>Book</span></div>
+
+    <div class="location">
+        📍 Hyderabad
+    </div>
+</header>
+
+
+<main class="container">
+
+    <div class="hero">
+        <h1>Book Your Movie</h1>
+        <p>Choose your movie, seats and showtime — all in one place.</p>
+    </div>
+
+
+    <!-- MOVIES -->
+
+    <h2 class="section-title">🎥 Select a Movie</h2>
+
+    <div class="movies">
+
+        <div class="movie selected"
+             data-movie="Galaxy Warriors"
+             data-price="220"
+             onclick="selectMovie(this)">
+
+            <div class="poster one">
+                🚀
+            </div>
+
+            <h3>Galaxy Warriors</h3>
+            <p>⭐ 8.7 &nbsp; | &nbsp; Action • Sci-Fi</p>
+        </div>
+
+
+        <div class="movie"
+             data-movie="The Last Journey"
+             data-price="180"
+             onclick="selectMovie(this)">
+
+            <div class="poster two">
+                🌄
+            </div>
+
+            <h3>The Last Journey</h3>
+            <p>⭐ 8.4 &nbsp; | &nbsp; Adventure • Drama</p>
+        </div>
+
+
+        <div class="movie"
+             data-movie="Mystery House"
+             data-price="200"
+             onclick="selectMovie(this)">
+
+            <div class="poster three">
+                🕵️
+            </div>
+
+            <h3>Mystery House</h3>
+            <p>⭐ 8.1 &nbsp; | &nbsp; Mystery • Thriller</p>
+        </div>
+
+    </div>
+
+
+    <!-- BOOKING -->
+
+    <div class="booking-panel">
+
+        <div class="selection-row">
+
+            <div>
+                <label for="date">📅 Select Date</label>
+
+                <select id="date">
+                    <option>Today</option>
+                    <option>Tomorrow</option>
+                    <option>23 September</option>
+                    <option>24 September</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label for="time">🕐 Select Showtime</label>
+
+                <select id="time">
+                    <option>10:30 AM</option>
+                    <option>1:30 PM</option>
+                    <option>4:30 PM</option>
+                    <option>7:30 PM</option>
+                    <option>10:30 PM</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <!-- SCREEN -->
+
+        <div class="screen-container">
+
+            <div class="screen"></div>
+
+            <div class="screen-text">
+                SCREEN THIS WAY
+            </div>
+
+        </div>
+
+
+        <!-- SEATS -->
+
+        <div class="seat-layout" id="seatLayout"></div>
+
+
+        <div class="legend">
+
+            <div class="legend-item">
+                <div class="legend-box"></div>
+                Available
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-box selected"></div>
+                Selected
+            </div>
+
+            <div class="legend-item">
+                <div class="legend-box occupied"></div>
+                Occupied
+            </div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="summary">
+
+            <div class="summary-row">
+                <span>Movie</span>
+                <span id="summaryMovie">Galaxy Warriors</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Show</span>
+                <span id="summaryShow">Today • 10:30 AM</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Seats</span>
+                <span id="summarySeats">None</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Tickets</span>
+                <span id="ticketCount">0</span>
+            </div>
+
+            <div class="total">
+                <span>Total</span>
+                <span>₹<span id="totalPrice">0</span></span>
+            </div>
+
+        </div>
+
+
+        <button class="book-btn" onclick="bookTickets()">
+            🎟️ Confirm Booking
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- CONFIRMATION MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-content">
+
+        <div class="success-icon">
+            🎉
+        </div>
+
+        <h2>Booking Confirmed!</h2>
+
+        <p style="margin-top:10px; color:#cbd5e1;">
+            Your movie tickets have been successfully booked.
+        </p>
+
+        <div class="booking-id">
+            Booking ID: <span id="bookingId"></span>
+        </div>
+
+        <p id="confirmationDetails"
+           style="color:#cbd5e1; line-height:1.7;">
+        </p>
+
+        <button class="close-btn"
+                onclick="closeModal()">
+            Done
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* ================= VARIABLES ================= */
+
+    let selectedMovie = "Galaxy Warriors";
+    let ticketPrice = 220;
+
+    let selectedSeats = [];
+
+    const seatLayout = document.getElementById("seatLayout");
+
+
+    /* ================= CREATE SEATS ================= */
+
+    const rows = ["A", "B", "C", "D", "E", "F"];
+
+    const occupiedSeats = [
+        "A3",
+        "A4",
+        "B6",
+        "C2",
+        "C5",
+        "D4",
+        "E1",
+        "E6",
+        "F3"
+    ];
+
+
+    function createSeats() {
+
+        seatLayout.innerHTML = "";
+
+        rows.forEach(rowLetter => {
+
+            const row = document.createElement("div");
+
+            row.className = "row";
+
+            for (let number = 1; number <= 6; number++) {
+
+                const seatNumber =
+                    rowLetter + number;
+
+                const seat =
+                    document.createElement("button");
+
+                seat.className = "seat";
+
+                seat.textContent = seatNumber;
+
+                seat.dataset.seat = seatNumber;
+
+
+                if (occupiedSeats.includes(seatNumber)) {
+
+                    seat.classList.add("occupied");
+
+                    seat.disabled = true;
+                }
+
+
+                seat.addEventListener("click", () => {
+
+                    toggleSeat(seat);
+
+                });
+
+
+                row.appendChild(seat);
+            }
+
+            seatLayout.appendChild(row);
+        });
+    }
+
+
+    /* ================= SEAT SELECTION ================= */
+
+    function toggleSeat(seat) {
+
+        const seatNumber =
+            seat.dataset.seat;
+
+
+        if (selectedSeats.includes(seatNumber)) {
+
+            selectedSeats =
+                selectedSeats.filter(
+                    s => s !== seatNumber
+                );
+
+            seat.classList.remove("selected");
+
+        } else {
+
+            selectedSeats.push(seatNumber);
+
+            seat.classList.add("selected");
+        }
+
+
+        updateSummary();
+    }
+
+
+    /* ================= MOVIE SELECTION ================= */
+
+    function selectMovie(movieElement) {
+
+        document
+            .querySelectorAll(".movie")
+            .forEach(movie => {
+
+                movie.classList.remove("selected");
+
+            });
+
+
+        movieElement.classList.add("selected");
+
+
+        selectedMovie =
+            movieElement.dataset.movie;
+
+        ticketPrice =
+            Number(movieElement.dataset.price);
+
+
+        updateSummary();
+    }
+
+
+    /* ================= UPDATE SUMMARY ================= */
+
+    function updateSummary() {
+
+        const date =
+            document.getElementById("date").value;
+
+        const time =
+            document.getElementById("time").value;
+
+
+        document.getElementById("summaryMovie")
+            .textContent = selectedMovie;
+
+
+        document.getElementById("summaryShow")
+            .textContent = `${date} • ${time}`;
+
+
+        document.getElementById("summarySeats")
+            .textContent =
+            selectedSeats.length
+                ? selectedSeats.join(", ")
+                : "None";
+
+
+        document.getElementById("ticketCount")
+            .textContent =
+            selectedSeats.length;
+
+
+        document.getElementById("totalPrice")
+            .textContent =
+            selectedSeats.length * ticketPrice;
+    }
+
+
+    /* ================= DATE/TIME ================= */
+
+    document.getElementById("date")
+        .addEventListener("change", updateSummary);
+
+
+    document.getElementById("time")
+        .addEventListener("change", updateSummary);
+
+
+    /* ================= BOOKING ================= */
+
+    function bookTickets() {
+
+        if (selectedSeats.length === 0) {
+
+            alert("Please select at least one seat.");
+
+            return;
+        }
+
+
+        const date =
+            document.getElementById("date").value;
+
+        const time =
+            document.getElementById("time").value;
+
+
+        const bookingId =
+            "CB" +
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            );
+
+
+        document.getElementById("bookingId")
+            .textContent = bookingId;
+
+
+        document.getElementById("confirmationDetails")
+            .innerHTML = `
+                <strong>${selectedMovie}</strong><br>
+                ${date} • ${time}<br>
+                Seats: ${selectedSeats.join(", ")}<br>
+                Total: ₹${selectedSeats.length * ticketPrice}
+            `;
+
+
+        document.getElementById("modal")
+            .style.display = "flex";
+    }
+
+
+    /* ================= CLOSE MODAL ================= */
+
+    function closeModal() {
+
+        document.getElementById("modal")
+            .style.display = "none";
+
+        selectedSeats = [];
+
+        document
+            .querySelectorAll(".seat.selected")
+            .forEach(seat => {
+
+                seat.classList.remove("selected");
+
+            });
+
+        updateSummary();
+    }
+
+
+    /* ================= INITIALIZE ================= */
+
+    createSeats();
+
+    updateSummary();
+
+</script>
+
+</body>
+</html>
+```
